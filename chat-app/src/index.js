@@ -10,20 +10,18 @@ const io = socketio(server);//express does not have access to pass hence raw htt
 const port = process.env.PORT || 3000;
 const publicDirectoryPath = path.join(__dirname,'../public')
 
-
 app.use(express.static(publicDirectoryPath))
 
-let count = 0
-
 io.on('connection',(socket)=>{
-    console.log('New websocket connection')
+    console.log('New websocket connection');
+    socket.emit('message','Welcome!')
+    socket.broadcast.emit('message','A new user has joined!') //send to all users except the sender
+    socket.on('sendMessage',(message)=>{
+        io.emit('message',message)
+    })
 
-    socket.emit('countEvents',count) //server sends updated count to client
-
-    socket.on('increment',()=>{ //listening cient events
-        count++
-        //socket.emit('countEvents',count)  //socket.emit emits to specific user
-        io.emit('countEvents',count) //io.emit emits to all connected clients
+    socket.on('disconnect',()=>{
+        io.emit('message',"A user left!")
     })
 })
 
