@@ -20,6 +20,11 @@ io.on('connection',(socket)=>{
         io.emit('message',message)
     })
 
+    socket.on('sendLocation',(coords)=>{
+        //socket.broadcast.emit('message',`Location: ${coords.latitude}, ${coords.longitude}`)
+        io.emit('message',`https://google.com/maps?q=${coords.latitude},${coords.longitude}`)
+    })
+    
     socket.on('disconnect',()=>{
         io.emit('message',"A user left!")
     })
@@ -28,4 +33,7 @@ io.on('connection',(socket)=>{
 server.listen(port,()=>{
     console.log('Server running on port',port);
 })
+
+
+
 
