@@ -24,7 +24,6 @@ $messageForm.addEventListener('submit',(e)=>{
 })
 
 const $locationButton = document.querySelector('#sendLocation')
-
 $locationButton.addEventListener('click',()=>{
     $locationButton.setAttribute('disabled','disabled')
     if(!navigator.geolocation){
