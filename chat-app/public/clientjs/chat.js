@@ -11,6 +11,28 @@ const sideBarTemplate = document.querySelector('#sidebar-template').innerHTML
 
 const {username,room}=Qs.parse(location.search,{ignoreQueryPrefix:true}) //ignoreQueryPrefix to remove ?
 
+const autoScroll=()=>{
+    //new message element
+    const $newMessage = $messages.lastElementChild
+    //Height of message
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+    //console.log(newMessageMargin)
+    //visible height
+    const visibleHeight = $messages.offsetHeight
+
+    //height of messages container
+    const containerHeight = $messages.scrollHeight
+
+    //How far user scrolled
+    const scrollOffset = $messages.scrollTop + visibleHeight
+
+    if(containerHeight - newMessageHeight <= scrollOffset){
+        $messages.scrollTop = $messages.scrollHeight
+    }
+}
+
 socket.on('message',(message)=>{
     console.log(message)
     const html = Mustache.render(messageTemplate,{
@@ -19,6 +41,7 @@ socket.on('message',(message)=>{
         createdAt:moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend',html)
+    autoScroll()
 })
 
 socket.on('locationMessage',(message)=>{
@@ -29,6 +52,8 @@ socket.on('locationMessage',(message)=>{
         createdAt:moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend',html)
+
+    autoScroll()
 })
 
 socket.on('roomData',({room,users})=>{
