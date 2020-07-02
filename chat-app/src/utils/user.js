@@ -15,7 +15,7 @@ const addUser=({id,username,room})=>{
     }
     //checking for existing user
     const existingUser = users.find((user)=>{
-        return user.room === room && user.username
+        return user.room === room && user.username === username
     })
 
     if(existingUser){
@@ -33,50 +33,40 @@ const addUser=({id,username,room})=>{
 }
 
 const removeUser=(id)=>{
-    const index = users.findIndex((user)=>{
+    const index = users.findIndex((user)=>{ //filter will search even when found, findIndex returns once found
         return user.id===id
     })
     if(index!==-1){
-        return users.splice(index,1)[0]
+        return users.splice(index,1)[0] //match found and splice removes by index
     }
 }
+
 const getUser = (id)=>{
-    return users.find((user)=>{
-        user.id===id
-    })
+     return users.find((user)=>user.id === id)
 }
+
+const getUsersInRoom = (room)=>{
+    return users.filter((user)=>user.room === room)
+}
+
 addUser({
     id:22,
-    username:'  AiShwarYa',
-    room:'abcd'
+    username:'aisHwaRYA  ',
+    room:'abc'
 })
 addUser({
     id:23,
     username:'elena',
-    room:'abcd'
+    room:'abc'
 })
 addUser({
     id:24,
-    username:'nairobi',
-    room:'center'
+    username:'rachel',
+    room:'bcd'
 })
-
-const user = getUser(22)
-console.log(user)
+const userfind = getUser(22)
 //console.log(users)
+console.log(userfind)
 
-
-
-
-// const removed = removeUser(22)
-// console.log(removed)
-// console.log(users)
-
- 
-// const res = addUser({
-//     id:33,
-//     username:'',
-//     room:''
-// })
-// console.log(res)
-
+const userList = getUsersInRoom('abc')
+console.log(userList)
