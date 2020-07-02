@@ -27,7 +27,7 @@ const addUser=({id,username,room})=>{
     //store user
     const user = {id,username,room}
     users.push(user)
-    console.log(users)
+    //console.log(users)
     return {user}
     
 }
@@ -49,24 +49,31 @@ const getUsersInRoom = (room)=>{
     return users.filter((user)=>user.room === room)
 }
 
-addUser({
-    id:22,
-    username:'aisHwaRYA  ',
-    room:'abc'
-})
-addUser({
-    id:23,
-    username:'elena',
-    room:'abc'
-})
-addUser({
-    id:24,
-    username:'rachel',
-    room:'bcd'
-})
-const userfind = getUser(22)
-//console.log(users)
-console.log(userfind)
+module.exports = {
+    addUser,
+    removeUser,
+    getUser,
+    getUsersInRoom
+}
 
-const userList = getUsersInRoom('abc')
-console.log(userList)
+// addUser({
+//     id:22,
+//     username:'aisHwaRYA  ',
+//     room:'abc'
+// })
+// addUser({
+//     id:23,
+//     username:'elena',
+//     room:'abc'
+// })
+// addUser({
+//     id:24,
+//     username:'rachel',
+//     room:'bcd'
+// })
+// const userfind = getUser(22)
+// //console.log(users)
+// console.log(userfind)
+
+// const userList = getUsersInRoom('abc')
+// console.log(userList)
