@@ -7,6 +7,9 @@ const $messages = document.querySelector('#messages')
 
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
+
+const {username,room}=Qs.parse(location.search,{ignoreQueryPrefix:true}) //ignoreQueryPrefix to remove ?
+
 socket.on('message',(message)=>{
     console.log(message)
     const html = Mustache.render(messageTemplate,{
@@ -60,6 +63,8 @@ $locationButton.addEventListener('click',()=>{
         })
     }
 })
+
+socket.emit('join',{username,room})
 
 // socket.on('countEvents',(count)=>{
 //     console.log("Count updated!",count)
